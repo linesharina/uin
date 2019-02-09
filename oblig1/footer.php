@@ -1,3 +1,2 @@
-<footer>
-	<p>Line Sharina Hagen</p>
-</footer>
+</body>
+</html>
