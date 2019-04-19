@@ -4,17 +4,17 @@
 ?>
 <main>
 	<nav>
-	<?php 
-		echo "<a href='./?movie=all'>Vis alle</a>";
-		
-		sort($movies);
-		foreach ($movies as $key => $value) {
-			echo "<a href='./?movie=".$key."'>".$value['title']."</a>";
-		}
-	?>
+		<?php 
+			echo "<a href='./'>Vis alle</a>";
+			
+			sort($movies);
+			foreach ($movies as $key => $value) {
+				echo "<a href='./?movie=".$key."'>".$value['title']."</a>";
+			}
+		?>
 	</nav>
 	<?php	
-		if( !isset($_GET['movie'])|| ($_GET['movie'] == 'all')) {
+		if(!isset($_GET['movie'])) {
 			foreach ($movies as $key => $value) {
 				$movie = $movies[$key];				
 				@require('all-movies.php');
