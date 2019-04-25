@@ -18,4 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/booking', 'BookingController@create')->name('booking.create');
+Route::get('/booking-when', 'BookingController@create1')->name('booking.create-step1');
+Route::get('/booking', 'BookingController@create4')->name('booking.create-step4');

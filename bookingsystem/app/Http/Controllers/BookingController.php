@@ -23,11 +23,20 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function create()
+
+    public function create1()
     {
         // $linepus = "jeg er pus";
         // return view('booking.create', compact('linepus'));
 
-        return view('booking.create');
+        return view('booking.create-step1');
+    }
+
+    public function create4()
+    {
+        // $linepus = "jeg er pus";
+        // return view('booking.create', compact('linepus'));
+
+        return view('booking.create-step4');
     }
 }
