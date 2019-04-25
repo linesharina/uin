@@ -1,14 +1,83 @@
-
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
+
+input {
+    padding: 0;
+}
 
 .navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+button,
+.button {
+    background-color: $hh-primary;
+    color: #f8f5e6;
+    border: 2px solid $hh-primary;
+    border-radius: 4px;
+    padding: 0.4em 0.8em;
+    line-height: 1;
+    box-shadow: 0 0.6em 0.6em -0.4em rgba(174, 151, 49, 0.33);
+}
+
+.booking-form {
+    width: 100%;
+    padding: 0 25px;
+
+    @media screen and (min-width: $content-s) {
+        max-width: $content-xs;
+        margin: 0 auto;
+    }
+
+    @media screen and (min-width: $content-m) {
+        max-width: $content-s;
+    }
+
+    @media screen and (min-width: $content-l) {
+        max-width: $content-m;
+    }
+
+    @media screen and (min-width: $content-xl) {
+        max-width: $content-l;
+    }
+
+    &-sec {
+        @media screen and (min-width: $content-l) {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &-inner {
+            padding: 16px 0;
+        }
+    }
+}
+
+.booking-form-step-1 {
+    p,
+    label {
+        margin-bottom: 0;
+    }
+    .input-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    .select-checkout-number {
+        select {
+            width: 100%;
+        }
+    }
 }
