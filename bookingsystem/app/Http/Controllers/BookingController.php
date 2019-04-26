@@ -73,13 +73,26 @@ class BookingController extends Controller
         return view('booking.create-step2');
     }
 
-        return view('booking.create-step1');
+    public function create3(Request $request)
+    {
+        return view('booking.create-step3');
     }
+
 
     public function create4()
     {
         // $linepus = "jeg er pus";
         // return view('booking.create', compact('linepus'));
+
+        // $booking = new Booking;
+        // $booking->check_in = '';
+        // $booking->check_out = '';
+        // $booking->save();
+
+        // $booking_rooms = new BookingRoom;
+        // $booking_rooms->booking_id = $booking->id;
+        // $booking_rooms->room_id = $room->id;
+        // $booking_rooms->save();
 
         return view('booking.create-step4');
     }
