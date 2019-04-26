@@ -48,15 +48,9 @@ button,
         max-width: $content-l;
     }
 
-    &-sec {
-        @media screen and (min-width: $content-l) {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        &-inner {
-            padding: 16px 0;
-        }
+    &-btns {
+        display: flex;
+        justify-content: space-between;
     }
 }
 
@@ -65,6 +59,25 @@ button,
     label {
         margin-bottom: 0;
     }
+
+    .step-1 {
+        &-sec {
+            @media screen and (min-width: $content-l) {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            &-inner {
+                width: 100%;
+                padding: 16px 0;
+
+                @media screen and (min-width: $content-l) {
+                    padding-right: 50px;
+                }
+            }
+        }
+    }
+
     .input-wrapper {
         width: 100%;
         display: flex;
