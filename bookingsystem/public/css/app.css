@@ -10666,6 +10666,11 @@ input {
   padding: 0;
 }
 
+img {
+  height: auto;
+  max-width: 100%;
+}
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -10680,6 +10685,12 @@ button,
   padding: 0.4em 0.8em;
   line-height: 1;
   box-shadow: 0 0.6em 0.6em -0.4em rgba(174, 151, 49, 0.33);
+}
+
+.button-secondary {
+  background-color: #000;
+  border: 2px solid #000;
+  color: #f8f5e6;
 }
 
 .booking-form {
@@ -10712,20 +10723,32 @@ button,
   }
 }
 
-@media screen and (min-width: 1366px) {
-  .booking-form-sec {
-    display: flex;
-    justify-content: space-between;
-  }
-}
-
-.booking-form-sec-inner {
-  padding: 16px 0;
+.booking-form-btns {
+  display: flex;
+  justify-content: space-between;
 }
 
 .booking-form-step-1 p,
 .booking-form-step-1 label {
   margin-bottom: 0;
+}
+
+@media screen and (min-width: 1366px) {
+  .booking-form-step-1 .step-1-sec {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.booking-form-step-1 .step-1-sec-inner {
+  width: 100%;
+  padding: 16px 0;
+}
+
+@media screen and (min-width: 1366px) {
+  .booking-form-step-1 .step-1-sec-inner {
+    padding-right: 50px;
+  }
 }
 
 .booking-form-step-1 .input-wrapper {
@@ -10740,5 +10763,42 @@ button,
 
 .booking-form-step-1 .select-checkout-number select {
   width: 100%;
+}
+
+.booking-form-step-2 .step-2-sec {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 1366px) {
+  .booking-form-step-2 .step-2-sec {
+    flex-direction: row;
+  }
+}
+
+.booking-form-step-2 .step-2-sec-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 0;
+  width: 100%;
+}
+
+@media screen and (min-width: 1366px) {
+  .booking-form-step-2 .step-2-sec-inner {
+    padding: 25px;
+    max-width: 50%;
+    justify-content: flex-end;
+  }
+}
+
+.booking-form-step-2 .step-2-sec-inner-check {
+  display: flex;
+  align-items: center;
+  padding: 25px 0 0 0;
+}
+
+.booking-form-step-2 .step-2-sec-inner-check p {
+  margin: 0 0 0 8px;
 }
 
