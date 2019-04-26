@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use App\Room;
+use App\Booking;
+use App\BookingRoom;
 
 class BookingController extends Controller
 {
