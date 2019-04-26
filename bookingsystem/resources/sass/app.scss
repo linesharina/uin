@@ -27,6 +27,12 @@ button,
     box-shadow: 0 0.6em 0.6em -0.4em rgba(174, 151, 49, 0.33);
 }
 
+.button-secondary {
+    background-color: $hh-black;
+    border: 2px solid $hh-black;
+    color: #f8f5e6;
+}
+
 .booking-form {
     width: 100%;
     padding: 0 25px;
