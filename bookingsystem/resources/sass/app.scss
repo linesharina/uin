@@ -81,3 +81,40 @@ button,
         }
     }
 }
+
+.booking-form-step-2 {
+    .step-2 {
+        &-sec {
+            display: flex;
+            flex-direction: column;
+
+            @media screen and (min-width: $content-l) {
+                flex-direction: row;
+            }
+
+            &-inner {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 25px 0;
+                width: 100%;
+
+                @media screen and (min-width: $content-l) {
+                    padding: 25px;
+                    max-width: 50%;
+                    justify-content: flex-end;
+                }
+
+                &-check {
+                    display: flex;
+                    align-items: center;
+                    padding: 25px 0 0 0;
+
+                    p {
+                        margin: 0 0 0 8px;
+                    }
+                }
+            }
+        }
+    }
+}
