@@ -10687,10 +10687,20 @@ button,
   box-shadow: 0 0.6em 0.6em -0.4em rgba(174, 151, 49, 0.33);
 }
 
+button:hover,
+.button:hover {
+  background-color: #867426;
+}
+
 .button-secondary {
   background-color: #000;
   border: 2px solid #000;
   color: #f8f5e6;
+}
+
+.button-secondary:hover {
+  color: white;
+  text-decoration: none;
 }
 
 .booking-form {
@@ -10798,7 +10808,63 @@ button,
   padding: 25px 0 0 0;
 }
 
-.booking-form-step-2 .step-2-sec-inner-check p {
+.booking-form-step-2 .step-2-sec-inner-check label {
   margin: 0 0 0 8px;
+}
+
+.booking-form-step-3 .step-3-facility {
+  padding: 25px 0;
+}
+
+.booking-form-step-3 .step-3-facility-inner {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.booking-form-step-3 .step-3-facility-inner p,
+.booking-form-step-3 .step-3-facility-inner label,
+.booking-form-step-3 .step-3-facility-inner input {
+  margin: 0;
+}
+
+.booking-form-step-3 .step-3-facility-inner-number {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+}
+
+.booking-form-step-3 .step-3-facility-inner-number label {
+  padding-right: 8px;
+}
+
+.booking-form-step-3 .step-3-facility-inner-number input {
+  width: 100%;
+}
+
+.booking-form-step-3 .step-3-facility-parking {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+  .booking-form-step-3 .step-3-facility-parking {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.booking-form-step-3 .step-3-facility-parking-inner span {
+  padding-right: 16px;
+}
+
+.booking-form-step-4 .step-4-sec-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-form-step-4 .step-4-sec-inner input {
+  margin-bottom: 24px;
 }
 

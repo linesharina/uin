@@ -30,12 +30,21 @@ button,
     padding: 0.4em 0.8em;
     line-height: 1;
     box-shadow: 0 0.6em 0.6em -0.4em rgba(174, 151, 49, 0.33);
+
+    &:hover {
+        background-color: darken($hh-primary, 10%);
+    }
 }
 
 .button-secondary {
     background-color: $hh-black;
     border: 2px solid $hh-black;
     color: #f8f5e6;
+
+    &:hover {
+        color: white;
+        text-decoration: none;
+    }
 }
 
 .booking-form {
@@ -134,9 +143,75 @@ button,
                     align-items: center;
                     padding: 25px 0 0 0;
 
-                    p {
+                    label {
                         margin: 0 0 0 8px;
                     }
+                }
+            }
+        }
+    }
+}
+
+.booking-form-step-3 {
+    .step-3 {
+        &-facility {
+            padding: 25px 0;
+
+            &-inner {
+                width: 100%;
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+
+                p,
+                label,
+                input {
+                    margin: 0;
+                }
+
+                &-number {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: baseline;
+
+                    label {
+                        padding-right: 8px;
+                    }
+
+                    input {
+                        width: 100%;
+                    }
+                }
+            }
+
+            &-parking {
+                display: flex;
+                flex-direction: column;
+
+                @media screen and (min-width: $content-s) {
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+
+                &-inner {
+                    span {
+                        padding-right: 16px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.booking-form-step-4 {
+    .step-4 {
+        &-sec {
+            &-inner {
+                display: flex;
+                flex-direction: column;
+
+                input {
+                    margin-bottom: 24px;
                 }
             }
         }
