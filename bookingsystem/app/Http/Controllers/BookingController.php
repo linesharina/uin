@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -62,7 +63,7 @@ class BookingController extends Controller
 
         // Sjekk om innsjekksdato er større eller lik utsjekksdato
         if($date_checkin->gte($date_checkout)) {
-            return redirect()->back()->withErrors(['Utsjekksdato må være etter innsjekksdato']);
+            return redirect()->back()->withInput()->withErrors(['Utsjekksdato må være etter innsjekksdato']);
         }
 
         foreach($request->all() as $key => $value) {  
@@ -74,9 +75,6 @@ class BookingController extends Controller
     
     public function show2()
     {
-
-        } 
-
         return view('booking.create-step2');
     }
 
@@ -89,6 +87,12 @@ class BookingController extends Controller
 
     public function create3(Request $request)
     {
+        $this->booking_step_2_validator($request->all())->validate();
+
+        foreach($request->all() as $key => $value) {  
+            session([$key => $value]);
+        } 
+
         return redirect()->route('booking.show-step3');
     }
 
@@ -106,7 +110,7 @@ class BookingController extends Controller
         ]);
     }
 
-    public function create4()
+    public function create4(Request $request)
     {
         $this->booking_step_3_validator($request->all())->validate();
 
@@ -117,7 +121,7 @@ class BookingController extends Controller
         
         // $linepus = "jeg er pus";
         // return view('booking.create', compact('linepus'));
-
+        
         // $booking = new Booking;
         // $booking->check_in = '';
         // $booking->check_out = '';
@@ -127,7 +131,9 @@ class BookingController extends Controller
         // $booking_rooms->booking_id = $booking->id;
         // $booking_rooms->room_id = $room->id;
         // $booking_rooms->save();
-
+        
+        return redirect()->route('booking.show-step4');
+    }
     
     public function show4()
     {
