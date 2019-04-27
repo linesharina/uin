@@ -96,4 +96,30 @@ class BookingController extends Controller
 
         return view('booking.create-step4');
     }
+    protected function booking_login_validator(array $data)
+    {
+        return Validator::make($data, [
+            'user_email' => ['required'],
+            'password' => ['required', 'string']
+        ]);
+    }
+
+    public function login(Request $request)
+    {
+        // LAG EN VALIDATOR HER
+        $this->booking_login_validator($request->all())->validate();
+
+        $login_attempt = Auth::attempt([
+            "email" => $request->email,
+            "password" => $request->password
+        ]);
+
+        if ($login_attempt) {
+            $request->session()->flash('success', 'Du ble logget inn.');
+            return view('booking.create-step5');
+        }
+
+        $request->session()->flash('error', 'Feil e-post eller passord.');
+        return redirect()->route('booking.show-step4')->withInput();
+    }
 }
