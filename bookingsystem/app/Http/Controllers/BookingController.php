@@ -141,6 +141,17 @@ class BookingController extends Controller
             'user_surname' => ['required', 'string'],
         ]);
     }
+
+    public function create5(Request $request)
+    {
+        $this->booking_step_4_validator($request->all())->validate();
+
+        foreach($request->all() as $key => $value) {  
+            session([$key => $value]);
+        } 
+        
+        return redirect()->route('booking.show-step5');
+    }
     
     public function show5()
     {
