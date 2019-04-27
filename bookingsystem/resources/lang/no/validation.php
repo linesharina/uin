@@ -10,6 +10,7 @@ return [
         'when_checkout-day' => 'Dag for utsjekk',
         'when_checkout-month' => 'Måned for utsjekk',
         'when_checkout-year' => 'År for utsjekk',
-        'when_number'  => 'Antall personer'
+        'when_number'  => 'Antall personer',
+        'room' => 'Rom'
     ],
 ];
