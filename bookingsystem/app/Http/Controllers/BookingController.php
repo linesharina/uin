@@ -67,6 +67,13 @@ class BookingController extends Controller
 
         foreach($request->all() as $key => $value) {  
             session([$key => $value]);
+        } 
+
+        return redirect()->route('booking.show-step2');
+    }
+    
+    public function show2()
+    {
 
         } 
 
@@ -81,6 +88,11 @@ class BookingController extends Controller
     }
 
     public function create3(Request $request)
+    {
+        return redirect()->route('booking.show-step3');
+    }
+
+    public function show3()
     {
         return view('booking.create-step3');
     }
@@ -116,6 +128,9 @@ class BookingController extends Controller
         // $booking_rooms->room_id = $room->id;
         // $booking_rooms->save();
 
+    
+    public function show4()
+    {
         return view('booking.create-step4');
     }
 
@@ -126,6 +141,12 @@ class BookingController extends Controller
             'user_surname' => ['required', 'string'],
         ]);
     }
+    
+    public function show5()
+    {
+        return view('booking.create-step5');
+    }
+
     protected function booking_login_validator(array $data)
     {
         return Validator::make($data, [
