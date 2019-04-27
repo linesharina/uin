@@ -73,14 +73,36 @@ class BookingController extends Controller
         return view('booking.create-step2');
     }
 
+    protected function booking_step_2_validator(array $data)
+    {
+        return Validator::make($data, [
+            'room' => 'required',
+        ]);
+    }
+
     public function create3(Request $request)
     {
         return view('booking.create-step3');
     }
 
+    protected function booking_step_3_validator(array $data)
+    {
+        return Validator::make($data, [
+            'facility_lunch' => ['required', 'integer', 'min:0', 'max:10'],
+            'facility_dinner' => ['required', 'integer', 'min:0', 'max:10'],
+            'facility_parking' => 'required'
+        ]);
+    }
 
     public function create4()
     {
+        $this->booking_step_3_validator($request->all())->validate();
+
+        foreach($request->all() as $key => $value) {  
+            session([$key => $value]);
+        } 
+
+        
         // $linepus = "jeg er pus";
         // return view('booking.create', compact('linepus'));
 
@@ -95,6 +117,14 @@ class BookingController extends Controller
         // $booking_rooms->save();
 
         return view('booking.create-step4');
+    }
+
+    protected function booking_step_4_validator(array $data)
+    {
+        return Validator::make($data, [
+            'user_firstname' => ['required', 'string'],
+            'user_surname' => ['required', 'string'],
+        ]);
     }
     protected function booking_login_validator(array $data)
     {
