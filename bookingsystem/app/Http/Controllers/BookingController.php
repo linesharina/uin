@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use App\User;
 use App\Room;
 use App\Booking;
 use App\BookingRoom;
@@ -66,6 +69,11 @@ class BookingController extends Controller
             return redirect()->back()->withInput()->withErrors(['Utsjekksdato må være etter innsjekksdato']);
         }
 
+        session([
+            'date_checkin' => $date_checkin,
+            'date_checkout' => $date_checkout
+        ]);
+
         foreach($request->all() as $key => $value) {  
             session([$key => $value]);
         } 
@@ -75,13 +83,40 @@ class BookingController extends Controller
     
     public function show2()
     {
-        return view('booking.create-step2');
+        // List opp alle romtyper
+        $room_types = DB::select('select distinct room_type as name, room_price as price from `rooms`');
+
+        // Finn ut hvor mange det er av de forskjellige romtypene
+        $room_type_count = Room::groupBy('room_type')->select('room_type', DB::raw('count(*) as total'))->get();
+
+        // dd($room_type_count);
+
+        $from = session('date_checkin');
+        $to = session('date_checkout');
+
+        // Finner alle bookinger i den perioden brukeren er interessert i
+        $bookings = Booking::whereBetween('check_in', [$from, $to])->whereBetween('check_out', [$from, $to])->get();
+        $bookings = $bookings->pluck('id')->toArray();
+        
+        // dd($booking_rooms->first()->booking);
+
+        $booking_rooms = BookingRoom::whereIn('booking_id', $bookings)->get();
+        dd($booking_rooms);
+
+        
+
+
+
+
+        return view('booking.create-step2', compact('room_types'));
     }
 
     protected function booking_step_2_validator(array $data)
     {
+        $room_types = ['single-room', 'double-room', 'suite', 'wedding-suite'];
+
         return Validator::make($data, [
-            'room' => 'required',
+            'room' => ['required', Rule::in($room_types)],
         ]);
     }
 
@@ -156,6 +191,7 @@ class BookingController extends Controller
             session([$key => $value]);
         } 
         
+        // dd($request->session()->all());
         return redirect()->route('booking.show-step5');
     }
     
@@ -178,7 +214,7 @@ class BookingController extends Controller
         $this->booking_login_validator($request->all())->validate();
 
         $login_attempt = Auth::attempt([
-            "email" => $request->email,
+            "email" => $request->user_email,
             "password" => $request->password
         ]);
 
