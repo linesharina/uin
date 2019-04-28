@@ -28,21 +28,12 @@
                                     <input value="{{ old('facility_dinner', session('facility_dinner')) }}" type="number" id="lunch" name="facility_dinner" min="0" max="10" required/>
                                 </span>
                             </div>
-                            <div class="step-3-facility">
+                            <div class="step-3-facility-inner">
                                 <h3>Parkering</h3>
-                                <div class="step-3-facility-parking">
-                                    <p>Ønsker du å reservere parkering?</p>
-                                    <div class="step-3-facility-parking-inner">
-                                        <span>
-                                            <input type="radio" name="facility_parking" id="parking-yes" value="1" required>
-                                            <label for="parking-yes">Ja</label>
-                                        </span>
-                                        <span>
-                                            <input type="radio" name="facility_parking" id="parking-no" value="0" required>
-                                            <label for="parking-no">Nei</label>
-                                        </span>
-                                    </div>
-                                </div>
+                                <span class="step-3-facility-inner-number">
+                                    <label for="parking">Antall</label>
+                                    <input value="{{ old('facility_parking', session('facility_parking')) }}" type="number" id="parking" name="facility_parking" min="0" max="14" required>
+                                </span>
                             </div>
                         </div>
                     </section>
