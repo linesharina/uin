@@ -87,7 +87,8 @@ class BookingController extends Controller
         $room_types = DB::select('select distinct room_type as name, room_price as price from `rooms`');
 
         // Finn ut hvor mange det er av de forskjellige romtypene
-        $room_type_count = Room::groupBy('room_type')->select('room_type', DB::raw('count(*) as total'))->get();
+        $available_rooms_count = Room::groupBy('room_type')->select('room_type', DB::raw('count(*) as total'))->get();
+        $available_rooms_count = $available_rooms_count->toArray();
 
         // dd($room_type_count);
 
@@ -99,9 +100,26 @@ class BookingController extends Controller
         $bookings = $bookings->pluck('id')->toArray();
         
         // dd($booking_rooms->first()->booking);
-
+        
         $booking_rooms = BookingRoom::whereIn('booking_id', $bookings)->get();
-        dd($booking_rooms);
+        $booking_rooms = $booking_rooms->pluck('room_id')->toArray();
+
+        // Finner alle reserverte rom
+        $unavailable_rooms_count = Room::whereIn('id', $booking_rooms)->groupBy('room_type')->select('room_type', DB::raw('count(*) as total'))->get();
+        $unavailable_rooms_count = $unavailable_rooms_count->toArray();
+        
+        dump($available_rooms_count);
+        foreach($available_rooms_count as $a) {
+            foreach($unavailable_rooms_count as $u) {
+                if($a['room_type'] === $u['room_type']) {
+                    $a['total'] = ($a['total'] - 1);
+                }
+            }
+        }
+
+        // dump('available');
+        // dump('unavailable');
+        // dd($unavailable_rooms_count);
 
         
 
