@@ -71,6 +71,7 @@ button,
     &-btns {
         display: flex;
         justify-content: space-between;
+        padding-top: 32px;
     }
 }
 
@@ -123,6 +124,7 @@ button,
 
             @media screen and (min-width: $content-l) {
                 flex-direction: row;
+                flex-wrap: wrap;
             }
 
             &-inner {
@@ -134,7 +136,7 @@ button,
 
                 @media screen and (min-width: $content-l) {
                     padding: 25px;
-                    max-width: 50%;
+                    width: 50%;
                     justify-content: flex-end;
                 }
 
@@ -153,9 +155,15 @@ button,
 }
 
 .booking-form-step-3 {
+    @media screen and (min-width: $content-m) {
+        max-width: $content-s;
+    }
     .step-3 {
         &-facility {
-            padding: 25px 0;
+            h3,
+            h4 {
+                padding-top: 16px;
+            }
 
             &-inner {
                 width: 100%;
@@ -183,27 +191,14 @@ button,
                     }
                 }
             }
-
-            &-parking {
-                display: flex;
-                flex-direction: column;
-
-                @media screen and (min-width: $content-s) {
-                    flex-direction: row;
-                    justify-content: space-between;
-                }
-
-                &-inner {
-                    span {
-                        padding-right: 16px;
-                    }
-                }
-            }
         }
     }
 }
 
 .booking-form-step-4 {
+    @media screen and (min-width: $content-m) {
+        max-width: $content-s;
+    }
     .step-4 {
         &-sec {
             &-inner {
@@ -213,6 +208,24 @@ button,
                 input {
                     margin-bottom: 24px;
                 }
+            }
+        }
+    }
+}
+
+.booking-form-step-5 {
+    width: 100%;
+
+    @media screen and (min-width: $content-m) {
+        max-width: $content-s;
+    }
+
+    .step-5 {
+        &-sec {
+            padding: 16px 0;
+            &-inner {
+                display: flex;
+                justify-content: space-between;
             }
         }
     }

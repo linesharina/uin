@@ -10736,6 +10736,7 @@ button:hover,
 .booking-form-btns {
   display: flex;
   justify-content: space-between;
+  padding-top: 32px;
 }
 
 .booking-form-step-1 p,
@@ -10783,6 +10784,7 @@ button:hover,
 @media screen and (min-width: 1366px) {
   .booking-form-step-2 .step-2-sec {
     flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 
@@ -10797,7 +10799,7 @@ button:hover,
 @media screen and (min-width: 1366px) {
   .booking-form-step-2 .step-2-sec-inner {
     padding: 25px;
-    max-width: 50%;
+    width: 50%;
     justify-content: flex-end;
   }
 }
@@ -10812,8 +10814,15 @@ button:hover,
   margin: 0 0 0 8px;
 }
 
-.booking-form-step-3 .step-3-facility {
-  padding: 25px 0;
+@media screen and (min-width: 1024px) {
+  .booking-form-step-3 {
+    max-width: 768px;
+  }
+}
+
+.booking-form-step-3 .step-3-facility h3,
+.booking-form-step-3 .step-3-facility h4 {
+  padding-top: 16px;
 }
 
 .booking-form-step-3 .step-3-facility-inner {
@@ -10843,20 +10852,10 @@ button:hover,
   width: 100%;
 }
 
-.booking-form-step-3 .step-3-facility-parking {
-  display: flex;
-  flex-direction: column;
-}
-
-@media screen and (min-width: 768px) {
-  .booking-form-step-3 .step-3-facility-parking {
-    flex-direction: row;
-    justify-content: space-between;
+@media screen and (min-width: 1024px) {
+  .booking-form-step-4 {
+    max-width: 768px;
   }
-}
-
-.booking-form-step-3 .step-3-facility-parking-inner span {
-  padding-right: 16px;
 }
 
 .booking-form-step-4 .step-4-sec-inner {
@@ -10866,5 +10865,24 @@ button:hover,
 
 .booking-form-step-4 .step-4-sec-inner input {
   margin-bottom: 24px;
+}
+
+.booking-form-step-5 {
+  width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .booking-form-step-5 {
+    max-width: 768px;
+  }
+}
+
+.booking-form-step-5 .step-5-sec {
+  padding: 16px 0;
+}
+
+.booking-form-step-5 .step-5-sec-inner {
+  display: flex;
+  justify-content: space-between;
 }
 
