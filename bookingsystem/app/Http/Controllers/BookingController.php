@@ -215,7 +215,42 @@ class BookingController extends Controller
     
     public function show5()
     {
-        return view('booking.create-step5');
+
+        $facilities = Facility::all();
+        $facilities = $facilities->toArray();
+        
+        $price = 0;
+        foreach($facilities as $f) {
+            if(session('facility_' . $f['name']) > 0) { 
+                $price += ($f['price'] * session('facility_' . $f['name']));
+            }
+        }
+        $price_fac = $price; 
+
+        $rooms = Room::all();
+        $rooms = $rooms->toArray();
+
+        $stored_rooms = session('rooms');
+
+        // Finner ut romtype og pris
+        for ($i=0; $i < count($stored_rooms); $i++) {
+            foreach ($rooms as $room) {
+                if ($stored_rooms[$i] === $room['room_type']) {
+                    $price += $room['room_price'];
+
+                    $stored_rooms[$i] = [
+                        'room_type' => $room['room_type'],
+                        'room_price' => $room['room_price']
+                    ];
+
+                    continue;
+                }
+            }
+        }
+
+        $rooms = $stored_rooms;
+
+        return view('booking.create-step5', compact('price', 'rooms', 'price_fac'));
     }
 
     protected function booking_login_validator(array $data)
