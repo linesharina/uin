@@ -17,6 +17,7 @@ class CreateBookingsTable extends Migration
             $table->bigIncrements('id');
             $table->datetime('check_in');
             $table->datetime('check_out');
+            $table->tinyInteger('people')->unsigned();
             $table->timestamps();
         });
     }
