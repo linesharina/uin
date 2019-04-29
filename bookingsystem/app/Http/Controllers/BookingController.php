@@ -12,6 +12,7 @@ use App\User;
 use App\Room;
 use App\Booking;
 use App\BookingRoom;
+use App\Facility;
 
 class BookingController extends Controller
 {
@@ -83,68 +84,43 @@ class BookingController extends Controller
     
     public function show2()
     {
-        // List opp alle romtyper
-        $room_types = DB::select('select distinct room_type as name, room_price as price from `rooms`');
-
-        // Finn ut hvor mange det er av de forskjellige romtypene
-        $available_rooms_count = Room::groupBy('room_type')->select('room_type', DB::raw('count(*) as total'))->get();
-        $available_rooms_count = $available_rooms_count->toArray();
-
-        // dd($room_type_count);
-
         $from = session('date_checkin');
         $to = session('date_checkout');
 
-        // Finner alle bookinger i den perioden brukeren er interessert i
-        $bookings = Booking::whereBetween('check_in', [$from, $to])->whereBetween('check_out', [$from, $to])->get();
-        $bookings = $bookings->pluck('id')->toArray();
-        
-        // dd($booking_rooms->first()->booking);
-        
-        $booking_rooms = BookingRoom::whereIn('booking_id', $bookings)->get();
-        $booking_rooms = $booking_rooms->pluck('room_id')->toArray();
-
-        // Finner alle reserverte rom
-        $unavailable_rooms_count = Room::whereIn('id', $booking_rooms)->groupBy('room_type')->select('room_type', DB::raw('count(*) as total'))->get();
-        $unavailable_rooms_count = $unavailable_rooms_count->toArray();
-        
-        dump($available_rooms_count);
-        foreach($available_rooms_count as $a) {
-            foreach($unavailable_rooms_count as $u) {
-                if($a['room_type'] === $u['room_type']) {
-                    $a['total'] = ($a['total'] - 1);
-                }
-            }
-        }
+        $room_types = Room::getAvailableRoomTypes($from, $to);
 
         // dump('available');
         // dump('unavailable');
         // dd($unavailable_rooms_count);
 
-        
-
-
-
-
         return view('booking.create-step2', compact('room_types'));
     }
 
     protected function booking_step_2_validator(array $data)
-    {
-        $room_types = ['single-room', 'double-room', 'suite', 'wedding-suite'];
+    {   
+        $from = session('date_checkin');
+        $to = session('date_checkout');
+
+        $room_array = Room::getAvailableRoomTypes($from, $to);
+
+        $room_types_array = [];
+        foreach($room_array as $r) {
+            array_push($room_types_array, $r->name);
+        }
 
         return Validator::make($data, [
-            'room' => ['required', Rule::in($room_types)],
+            'rooms' => ['required', 'array'],
+            'rooms.*' => ['required', 'string', Rule::in($room_types_array)],
         ]);
+
+
     }
 
     public function create3(Request $request)
     {
         $this->booking_step_2_validator($request->all())->validate();
-
-        foreach($request->all() as $key => $value) {  
-            session([$key => $value]);
-        } 
+        
+        session(['rooms' => $request->rooms]);
 
         return redirect()->route('booking.show-step3');
     }
@@ -185,11 +161,19 @@ class BookingController extends Controller
         // $booking_rooms->room_id = $room->id;
         // $booking_rooms->save();
         
+        if (Auth::check()) {
+            return redirect()->route('booking.show-step5');
+        }
+
         return redirect()->route('booking.show-step4');
     }
     
     public function show4()
     {
+        if (Auth::check()) {
+            return redirect()->route('booking.show-step3');
+        }
+
         return view('booking.create-step4');
     }
 
@@ -273,7 +257,7 @@ class BookingController extends Controller
 
         if ($login_attempt) {
             $request->session()->flash('success', 'Du ble logget inn.');
-            return view('booking.create-step5');
+            return redirect()->route('booking.show-step5');
         }
 
         $request->session()->flash('error', 'Feil e-post eller passord.');
