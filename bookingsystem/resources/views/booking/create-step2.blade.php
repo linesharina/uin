@@ -12,7 +12,7 @@
                         <section class="step-2-sec-inner">
                             <img src="{{ asset('images/' . __($room_type->name) . '.jpg') }}" alt="Illutrasjon av {{ __($room_type->name) }}">
                             <span class="step-2-sec-inner-check">
-                                <input type="checkbox" name="room" id="form-room-{{ $room_type->name }}" value="{{ $room_type->name }}" {{ session('room') === $room_type->name ? 'checked' : null }}>
+                                <input type="checkbox" name="rooms[]" id="form-room-{{ $room_type->name }}" value="{{ $room_type->name }}" {{ session('room') === $room_type->name ? 'checked' : null }}>
                                 <label for="form-room-{{ $room_type->name }}">{{ __(ucfirst($room_type->name)) }}</label>
                             </span>
                             <p>NOK {{ $room_type->price }},- per natt</p>        

@@ -14,13 +14,19 @@
                 <p>{{ Session::get('when_checkout-day') . "." . Session::get('when_checkout-month') . "." . Session::get('when_checkout-year')}}</p>
             </div>
         </section>
-        <section class="step-5-sec">
-            <h3>Rom</h3>
-            <div class="step-5-sec-inner">
-                <p>Romtype:</p>
-                <p>{{ Session::get('room')}}</p>
-            </div>
-        </section>
+        <h3>Rom</h3>
+        @foreach ($rooms as $room)        
+            <section class="step-5-sec">
+                <div class="step-5-sec-inner">
+                    <p>Romtype:</p>
+                    <p>{{ $room['room_type'] }}</p> 
+                </div>
+                <div class="step-5-sec-inner">
+                    <p>Pris rom:</p>
+                    <p>{{ $room['room_price'] }},- NOK</p> 
+                </div>
+            </section>
+        @endforeach
         <section class="step-5-sec">
             <h3>Fasiliteter</h3>
             <div>
@@ -32,9 +38,14 @@
                     <p>Middag:</p>
                     <p>{{ Session::get('facility_dinner')}}</p>
                 </div>
+                <div class="step-5-sec-inner">
+                    <p>Pris måltider:</p>
+                    {{-- <p>{{ Session::get('price_fac')}},- NOK</p> --}}
+                    <p>{{ $price_fac }},- NOK</p>
+                </div>
             </div>
             <div class="step-5-sec-inner">
-                <p>Parkering:</p>
+                <h4>Parkering:</h4>
                 <p>{{ Session::get('facility_parking')}}</p>
             </div>
         </section>
@@ -54,7 +65,7 @@
             </div>
         </section>
         <section class="step-5-sec">
-            <h3>Totalpris:</h3>
+            <h3>Totalpris: {{ $price }},- NOK</h3>
         </section>
 
         <section class="booking-form-btns">

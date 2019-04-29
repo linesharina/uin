@@ -25,21 +25,21 @@
             <section class="step-4-sec">
                 <div class="step-4-sec-inner">
                     <label for="firstname">Fornavn*</label>
-                    <input value="{{ old('user_firstname', session('user_firstname')) }}" type="text" id="firstname" name="user_firstname" required/>
+                    <input value="{{ old('user_firstname', session('user_firstname')) }}" type="text" id="firstname" name="user_firstname"  required/>
                 </div>
                 <div class="step-4-sec-inner">
                     <label for="surname">Etternavn*</label>
-                    <input value="{{ old('user_surname', session('user_surname')) }}" type="text" id="surname" name="user_surname" />
+                    <input value="{{ old('user_surname', session('user_surname')) }}" type="text" id="surname" name="user_surname" required />
                 </div>
             </section>
             <section class="step-4-sec">
                 <div class="step-4-sec-inner">
                     <label for="mail">E-post*</label>
-                    <input value="{{ old('user_mail', session('user_mail')) }}" type="email" id="mail" name="user_mail" />
+                    <input value="{{ old('user_mail', session('user_mail')) }}" type="email" id="mail" name="user_mail" required />
                 </div>
                 <div class="step-4-sec-inner">
                     <label for="phone_number">Mobil*</label>
-                    <input value="{{ old('user_phone', session('user_phone')) }}" type="text" id="phone_number" name="user_phone" />
+                    <input value="{{ old('user_phone', session('user_phone')) }}" type="number" id="phone_number" name="user_phone" required />
                 </div>
             </section>
             <section class="booking-form-btns">
