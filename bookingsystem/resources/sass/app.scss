@@ -33,6 +33,8 @@ button,
 
     &:hover {
         background-color: darken($hh-primary, 10%);
+        color: white;
+        text-decoration: none;
     }
 }
 
@@ -40,16 +42,11 @@ button,
     background-color: $hh-black;
     border: 2px solid $hh-black;
     color: #f8f5e6;
-
-    &:hover {
-        color: white;
-        text-decoration: none;
-    }
 }
 
 .booking-form {
     width: 100%;
-    padding: 0 25px;
+    padding: 50px 25px 0;
 
     @media screen and (min-width: $content-s) {
         max-width: $content-xs;

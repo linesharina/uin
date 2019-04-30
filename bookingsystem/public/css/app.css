@@ -10690,6 +10690,8 @@ button,
 button:hover,
 .button:hover {
   background-color: #867426;
+  color: white;
+  text-decoration: none;
 }
 
 .button-secondary {
@@ -10698,14 +10700,9 @@ button:hover,
   color: #f8f5e6;
 }
 
-.button-secondary:hover {
-  color: white;
-  text-decoration: none;
-}
-
 .booking-form {
   width: 100%;
-  padding: 0 25px;
+  padding: 50px 25px 0;
 }
 
 @media screen and (min-width: 768px) {
