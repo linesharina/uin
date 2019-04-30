@@ -30,6 +30,4 @@ Route::post('/booking-registrer', 'BookingController@create4')->name('booking.cr
 Route::post('/booking-sammendrag', 'BookingController@create5')->name('booking.create-step5');
 Route::post('/booking-takk', 'BookingController@create6')->name('booking.create-step6');
 
-
-
 Route::post('/booking-login', 'BookingController@login')->name('booking.login');
