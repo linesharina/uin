@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <article class="booking-form booking-form-step-5">
+    <form class="booking-form booking-form-step-5" action="{{ route('booking.create-step6') }}" method="POST">
+        @csrf
         <h2>Sammendrag</h2>
         <section class="step-5-sec">
             <h3>Reise</h3>
@@ -69,8 +70,8 @@
         </section>
 
         <section class="booking-form-btns">
-                <a href="{{ route('booking.create-step4') }}" class="button button-secondary">Tilbake<a/>
+                <a href="{{ route('booking.create-step4') }}" class="button button-secondary">Tilbake</a>
                 <button type="submit">Bekreft booking</button>
         </section>
-    </article>
+    </form>
 @endsection
