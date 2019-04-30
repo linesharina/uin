@@ -7,12 +7,15 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\User;
+use App\Facility;
 use App\Room;
 use App\Booking;
 use App\BookingRoom;
-use App\Facility;
+use App\BookingUser;
+use App\BookingUserFacility;
 
 class BookingController extends Controller
 {
@@ -43,11 +46,11 @@ class BookingController extends Controller
     protected function booking_step_1_validator(array $data)
     {
         return Validator::make($data, [
-            'when_checkin-day' => ['required', 'integer', 'min:1', 'max:31'],
-            'when_checkin-month' => ['required', 'integer', 'min:1', 'max:12'],
+            'when_checkin-day' => ['required', 'numeric', 'min:1', 'max:31'],
+            'when_checkin-month' => ['required', 'numeric', 'min:1', 'max:12'],
             'when_checkin-year' => ['required', 'integer', 'min:' . date('Y'), 'max:' . (date('Y') + 1)],
-            'when_checkout-day' => ['required', 'integer', 'min:1', 'max:31'],
-            'when_checkout-month' => ['required', 'integer', 'min:1', 'max:12'],
+            'when_checkout-day' => ['required', 'numeric', 'min:1', 'max:31'],
+            'when_checkout-month' => ['required', 'numeric', 'min:1', 'max:12'],
             'when_checkout-year' => ['required', 'integer', 'min:' . date('Y'), 'max:' . (date('Y') + 1)],
             'when_number' => ['required', 'integer', 'min:1', 'max:10'],
         ]);
@@ -69,6 +72,11 @@ class BookingController extends Controller
         if($date_checkin->gte($date_checkout)) {
             return redirect()->back()->withInput()->withErrors(['Utsjekksdato må være etter innsjekksdato']);
         }
+        
+        // Sjekk om bruker prøver å booke for dato i fortiden
+        if(!$date_checkin->isToday() && $date_checkin->isPast()) {
+            return redirect()->back()->withInput()->withErrors(['Dato må være fremover i tid.']);
+        }
 
         session([
             'date_checkin' => $date_checkin,
@@ -88,10 +96,6 @@ class BookingController extends Controller
         $to = session('date_checkout');
 
         $room_types = Room::getAvailableRoomTypes($from, $to);
-
-        // dump('available');
-        // dump('unavailable');
-        // dd($unavailable_rooms_count);
 
         return view('booking.create-step2', compact('room_types'));
     }
@@ -119,6 +123,11 @@ class BookingController extends Controller
     public function create3(Request $request)
     {
         $this->booking_step_2_validator($request->all())->validate();
+
+        $from = session('date_checkin');
+        $to = session('date_checkout');
+
+        // $parking = Facility::getAvailableParking($from, $to);
         
         session(['rooms' => $request->rooms]);
 
@@ -135,7 +144,7 @@ class BookingController extends Controller
         return Validator::make($data, [
             'facility_lunch' => ['required', 'integer', 'min:0', 'max:10'],
             'facility_dinner' => ['required', 'integer', 'min:0', 'max:10'],
-            'facility_parking' => 'required'
+            'facility_parking' => ['required', 'integer', 'min:0', 'max:14']
         ]);
     }
 
@@ -146,20 +155,6 @@ class BookingController extends Controller
         foreach($request->all() as $key => $value) {  
             session([$key => $value]);
         } 
-
-        
-        // $linepus = "jeg er pus";
-        // return view('booking.create', compact('linepus'));
-        
-        // $booking = new Booking;
-        // $booking->check_in = '';
-        // $booking->check_out = '';
-        // $booking->save();
-
-        // $booking_rooms = new BookingRoom;
-        // $booking_rooms->booking_id = $booking->id;
-        // $booking_rooms->room_id = $room->id;
-        // $booking_rooms->save();
         
         if (Auth::check()) {
             return redirect()->route('booking.show-step5');
@@ -192,8 +187,7 @@ class BookingController extends Controller
         foreach($request->all() as $key => $value) {  
             session([$key => $value]);
         } 
-        
-        // dd($request->session()->all());
+    
         return redirect()->route('booking.show-step5');
     }
     
@@ -235,6 +229,95 @@ class BookingController extends Controller
         $rooms = $stored_rooms;
 
         return view('booking.create-step5', compact('price', 'rooms', 'price_fac'));
+    }
+
+
+    public function create6(Request $request)
+    {
+        
+        $booking = new Booking;
+        $booking->check_in = session('date_checkin');
+        $booking->check_out = session('date_checkout');
+        $booking->people = session('when_number');
+        $booking->save();
+        
+        $rooms_s = session('rooms');
+        
+        $active_rooms = Room::getActiveRooms($booking->check_in, $booking->check_out);
+        $active_rooms = $active_rooms->pluck('room_id');
+
+        foreach($rooms_s as $room_s) {
+            $room = Room::where('room_type', $room_s)->whereNotIn('id', $active_rooms)->first();
+            $booking_rooms = new BookingRoom;
+            $booking_rooms->booking_id = $booking->id;
+            $booking_rooms->room_id = $room->id;
+            $booking_rooms->save();
+        }
+
+        // Opprett en bruker i databasen om man ikke er logget inn
+        if(Auth::check()) {
+            $user = Auth::user();
+        } else {
+            // Lag en bruker kun om den ikke finnes fra før
+            $user = User::where('email', session('user_mail'))->first();
+    
+            if($user === null) {
+                $user = new User;
+                $user->firstname = session('user_firstname');
+                $user->surname = session('user_surname');
+                $user->email = session('user_mail');
+                $user->phone = session('user_phone');
+                $user->save();
+            }
+        }
+
+        $booking_user = new BookingUser;
+        $booking_user->booking_id = $booking->id;
+        $booking_user->user_id = $user->id;
+        $booking_user->save();
+
+
+        // dd(session()->all());
+        
+        if(session('facility_lunch') > 0) {
+            $facility= Facility::where('name', 'lunch')->first();
+
+            for($i = 0; $i < session('facility_lunch'); $i++) {
+                $booking_user_facility = new BookingUserFacility;
+                $booking_user_facility->booking_user_id = $booking_user->id;
+                $booking_user_facility->facility_id = $facility->id;
+                $booking_user_facility->save();
+            }
+        }
+
+        if(session('facility_dinner') > 0) {
+            $facility= Facility::where('name', 'dinner')->first();
+
+            for($i = 0; $i < session('facility_dinner'); $i++) {
+                $booking_user_facility = new BookingUserFacility;
+                $booking_user_facility->booking_user_id = $booking_user->id;
+                $booking_user_facility->facility_id = $facility->id;
+                $booking_user_facility->save();
+            }
+        }
+
+        if(session('facility_parking') > 0) {
+            $facility= Facility::where('name', 'parking')->first();
+
+            for($i = 0; $i < session('facility_parking'); $i++) {
+                $booking_user_facility = new BookingUserFacility;
+                $booking_user_facility->booking_user_id = $booking_user->id;
+                $booking_user_facility->facility_id = $facility->id;
+                $booking_user_facility->save();
+            }
+        }
+        
+        return redirect()->route('booking.show-step6');
+    }
+    
+    public function show6()
+    {
+        return view('booking.create-step6');
     }
 
     protected function booking_login_validator(array $data)
