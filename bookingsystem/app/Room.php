@@ -10,6 +10,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
+    public static function getActiveRooms(Carbon $from, Carbon $to) {
+        $rooms = BookingRoom::select(
+            'booking_id',
+            'bookings.check_in',
+            'bookings.check_out',
+            'room_id'
+        )->join('bookings', 'booking_rooms.booking_id', '=', 'bookings.id')
+        ->where('bookings.check_in', '<', $to)
+        ->where('bookings.check_out', '>', $from)
+        ->get();
+
+        return $rooms;
+    }
+
     public static function getAvailableRoomTypes(Carbon $from, Carbon $to)
     {
         // List opp alle romtyper
@@ -20,7 +34,7 @@ class Room extends Model
         $available_rooms_count = $available_rooms_count->toArray();
 
         // Finner alle bookinger i den perioden brukeren er interessert i
-        $bookings = Booking::whereBetween('check_in', [$from, $to])->whereBetween('check_out', [$from, $to])->get();
+        $bookings = Booking::getActiveBookings($from, $to);
         $bookings = $bookings->pluck('id')->toArray();
         
         $booking_rooms = BookingRoom::whereIn('booking_id', $bookings)->get();
@@ -30,7 +44,7 @@ class Room extends Model
         $unavailable_rooms_count = self::whereIn('id', $booking_rooms)->groupBy('room_type')->select('room_type', DB::raw('count(*) as total'))->get();
         $unavailable_rooms_count = $unavailable_rooms_count->toArray();
         
-        // trekk fra available
+        // Trekk fra de ledige rommene
         foreach($available_rooms_count as $a) {
             foreach($unavailable_rooms_count as $u) {
                 if($a['room_type'] === $u['room_type']) {
