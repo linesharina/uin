@@ -2,6 +2,7 @@
 
 use App\Room;
 use App\Booking;
+use App\Facility;
 use Carbon\Carbon;
 use App\BookingRoom;
 use Illuminate\Database\Seeder;
@@ -33,16 +34,32 @@ class DatabaseSeeder extends Seeder
 
             array_push($rooms, $room);
 
-            $booking = Booking::create([
-                'people' => 2,
-                'check_in' => Carbon::now(),
-                'check_out' => Carbon::now()->addDays(3)
+            // $booking = Booking::create([
+            //     'people' => 2,
+            //     'check_in' => Carbon::now(),
+            //     'check_out' => Carbon::now()->addDays(3)
+            // ]);
+
+            // BookingRoom::create([
+            //     'room_id' => $room->id,
+            //     'booking_id' => $booking->id
+            // ]);
+        }
+
+        $facilities = [
+            'lunch' => 100,
+            'dinner' => 250,
+            'parking' => 0,
+        ];
+
+        $f = [];
+        foreach ($facilities as $name => $price) {
+            $facility = Facility::create([
+                'name' => $name,
+                'price' => $price,
             ]);
 
-            BookingRoom::create([
-                'room_id' => $room->id,
-                'booking_id' => $booking->id
-            ]);
+            array_push($f, $facility);
         }
     }
 }
