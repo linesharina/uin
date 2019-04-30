@@ -44,7 +44,6 @@
             </section>
             <section class="booking-form-btns">
                     <a href="{{ route('booking.create-step3') }}" class="button button-secondary">Tilbake<a/>
-                    <a href="#" class="button button-secondary">Registrer bruker<a/>
                     <button type="submit">Fortsett som gjest</button>
             </section>
         </form>
