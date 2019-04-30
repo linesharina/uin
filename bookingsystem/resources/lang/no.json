@@ -6,5 +6,12 @@
     "Single": "Enkeltrom",
     "Double": "Dobbeltrom",
     "Suite": "Suite",
-    "Wedding": "Bryllupssuite"
+    "Wedding": "Bryllupssuite",
+    "Firstname": "Fornavn",
+    "Surname": "Etternavn",
+    "Phone number": "Telefonnummer",
+    "E-mail": "E-post",
+    "Password": "Passord",
+    "Confirm Password": "Bekreft passord",
+    "Register": "Registrer"
 }
