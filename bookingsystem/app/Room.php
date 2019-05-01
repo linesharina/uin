@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
+    // Henter rom som er tatt
     public static function getActiveRooms(Carbon $from, Carbon $to) {
         $rooms = BookingRoom::select(
             'booking_id',
@@ -24,6 +25,7 @@ class Room extends Model
         return $rooms;
     }
 
+    // Henter ut de romtypene som har ledige rom
     public static function getAvailableRoomTypes(Carbon $from, Carbon $to)
     {
         // List opp alle romtyper
@@ -40,14 +42,14 @@ class Room extends Model
         $booking_rooms = $booking_rooms->pluck('room_id')->toArray();
         
         // Finner alle reserverte rom
-        $unavailable_rooms_count = self::whereIn('id', $booking_rooms)->groupBy('room_type')->select('room_type', DB::raw('count(*) as total'))->get();
+        $unavailable_rooms_count = self::whereIn('id', $booking_rooms)->groupBy('room_type')->select('room_type', DB::raw('count(*) as taken'))->get();
         $unavailable_rooms_count = $unavailable_rooms_count->toArray();
         
         // Trekk fra de ledige rommene
-        foreach($available_rooms_count as $key => $a) {
-            foreach($unavailable_rooms_count as $u) {
-                if($a['room_type'] === $u['room_type']) {
-                    $available_rooms_count[$key]['total']--;
+        foreach($available_rooms_count as $key => $available_room) {
+            foreach($unavailable_rooms_count as $unavailable_room) {
+                if($available_room['room_type'] === $unavailable_room['room_type']) {
+                    $available_rooms_count[$key]['total'] -= $unavailable_room['taken'];
                 }
             }
         }
