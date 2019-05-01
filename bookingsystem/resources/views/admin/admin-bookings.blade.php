@@ -3,12 +3,12 @@
 @section('content')
     <article class="booking-form bookings">
         <h1>Bookinger</h1>
-        <section class="bookings-inner">
-            @foreach ($bookings as $booking)
-            <h2>ID: {{ $booking->id }}</h2>
+        @foreach ($bookings as $booking)
+            <section class="bookings-inner">
+                <h2>ID: {{ $booking->id }}</h2>
                 <h4>Opplysninger</h4>
-                <p>Innsjekk: {{ $booking->check_in->format('d.m.Y') }}</p>
-                <p>Utsjekk: {{ $booking->check_out->format('d.m.Y') }}</p>
+                <p>Innsjekk: {{ $booking->check_in->format('Y-m-d') }}</p>
+                <p>Utsjekk: {{ $booking->check_out->format('Y-m-d') }}</p>
                 <p>Antall personer: {{ $booking->people }}</p>
                 @foreach ($booking->users as $booking_user)
                     @foreach ($booking->booking_rooms as $booking_room)
@@ -24,7 +24,16 @@
                         <p>{{ __(ucfirst($facility_name)) . ': ' . $facility['count']  }}</p>
                     @endforeach
                 @endforeach
-            @endforeach
-        </section>
+                <div class="bookings-inner-edit">
+                    <a class="button" href="{{ route('admin.admin-edit', $booking) }}">Rediger</a>
+                    <form method="POST" action="{{ route('admin.admin-delete', $booking) }}">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="button button-secondary">Slett</button>
+                    </form>
+                </div>
+            </section>
+            <hr>
+        @endforeach
    </article>
 @endsection
