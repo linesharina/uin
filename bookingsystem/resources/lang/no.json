@@ -13,5 +13,11 @@
     "E-mail": "E-post",
     "Password": "Passord",
     "Confirm Password": "Bekreft passord",
-    "Register": "Registrer"
+    "Register": "Registrer",
+    "lunch": "lunsj",
+    "dinner": "middag",
+    "parking": "parkering",
+    "Lunch": "Lunsj",
+    "Dinner": "Middag",
+    "Parking": "Parkering"
 }
