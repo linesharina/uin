@@ -20,7 +20,7 @@
             <section class="step-5-sec">
                 <div class="step-5-sec-inner">
                     <p>Romtype:</p>
-                    <p>{{ $room['room_type'] }}</p> 
+                    <p>{{ __($room['room_type']) }}</p> 
                 </div>
                 <div class="step-5-sec-inner">
                     <p>Pris rom:</p>
