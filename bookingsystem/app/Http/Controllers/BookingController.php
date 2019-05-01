@@ -20,18 +20,6 @@ use App\BookingUserFacility;
 class BookingController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        // $this->middleware('auth');
-        // $this->middleware('auth')->except('create');
-        // $this->middleware('auth')->only('create');
-    }
-
-    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
