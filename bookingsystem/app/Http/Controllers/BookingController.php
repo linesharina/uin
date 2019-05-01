@@ -123,11 +123,6 @@ class BookingController extends Controller
     public function create3(Request $request)
     {
         $this->booking_step_2_validator($request->all())->validate();
-
-        $from = session('date_checkin');
-        $to = session('date_checkout');
-
-        // $parking = Facility::getAvailableParking($from, $to);
         
         session(['rooms' => $request->rooms]);
 
@@ -141,10 +136,15 @@ class BookingController extends Controller
 
     protected function booking_step_3_validator(array $data)
     {
+        $from = session('date_checkin');
+        $to = session('date_checkout');
+
+        $available_parking_spots = Facility::getAvailableParking($from, $to);
+
         return Validator::make($data, [
             'facility_lunch' => ['required', 'integer', 'min:0', 'max:10'],
             'facility_dinner' => ['required', 'integer', 'min:0', 'max:10'],
-            'facility_parking' => ['required', 'integer', 'min:0', 'max:14']
+            'facility_parking' => ['required', 'integer', 'min:0', 'max:' . $available_parking_spots]
         ]);
     }
 
@@ -156,10 +156,12 @@ class BookingController extends Controller
             session([$key => $value]);
         } 
         
+        // Hvis brukeren blir logget inn, send til neste steg
         if (Auth::check()) {
             return redirect()->route('booking.show-step5');
         }
 
+        // Om brukeren ikke ble logget inn, send tilbake
         return redirect()->route('booking.show-step4');
     }
     
@@ -315,8 +317,10 @@ class BookingController extends Controller
         return redirect()->route('booking.show-step6');
     }
     
-    public function show6()
+    public function show6(Request $request)
     {
+        // Tøm session data etter bekreftet booking
+        $request->session()->flush();
         return view('booking.create-step6');
     }
 
