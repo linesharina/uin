@@ -229,7 +229,20 @@ button,
 }
 
 .bookings {
+    width: 100%;
+
+    @media screen and (min-width: $content-m) {
+        max-width: $content-s;
+    }
+
     &-inner {
         padding: 50px 0;
+
+        &-edit {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 16px 0;
+        }
     }
 }

@@ -10883,7 +10883,24 @@ button:hover,
   justify-content: space-between;
 }
 
+.bookings {
+  width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .bookings {
+    max-width: 768px;
+  }
+}
+
 .bookings-inner {
   padding: 50px 0;
+}
+
+.bookings-inner-edit {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 16px 0;
 }
 
