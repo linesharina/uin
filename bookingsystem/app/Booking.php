@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class Booking extends Model
 {
     public $dates = ['check_in', 'check_out'];
-    
+
     public static function getActiveBookings(Carbon $from, Carbon $to) {
         return self::whereBetween('check_in', [$from, $to])->whereBetween('check_out', [$from, $to])->get();
     }
