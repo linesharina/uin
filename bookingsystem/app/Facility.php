@@ -2,9 +2,10 @@
 
 namespace App;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Booking;
+use App\BookingUser;
 use App\BookingUserFasility;
 
 class Facility extends Model
@@ -14,38 +15,21 @@ class Facility extends Model
         // Antall parkeringsplasser
         $parking_spots = 14;
 
-        // Finner alle bookinger i den perioden brukeren er interessert i
-        $bookings = Booking::getActiveBookings($from, $to);
-        $bookings = $bookings->pluck('id')->toArray();
+        $parkings_unavailable = BookingUserFacility::select(
+            'booking_user_facilities.id', 
+            'booking_user_facilities.facility_id'
+        )->join('booking_users', 'booking_users.id', '=', 'booking_user_facilities.booking_user_id')
+        ->join('facilities', 'facilities.id', '=', 'booking_user_facilities.facility_id')
+        ->where('booking_user_facilities.facility_id', 3)
+        ->groupBy('booking_user_facilities.facility_id')
+        ->select('booking_user_facilities.facility_id', DB::raw('count(*) as total'))
+        ->get();
+        $parkings_unavailable = $parkings_unavailable->pluck('total')->toArray();
         
-        $booking_user_facility = BookingUserFacility::whereIn('booking_user_id', $bookings)->get();
-        $booking_user_facility = $booking_user_facility->pluck('id')->toArray();
-        dd($booking_user_facility);        
-        
-        // Finner alle reserverte parkeringer
-        $unavailable_parkings_count = self::whereIn('name', 'parking')->get();
-        $unavailable_parkings_count = $unavailable_parkings_count->toArray();
-        
-        // // Trekk fra de ledige rommene
-        // foreach($available_rooms_count as $a) {
-        //     foreach($unavailable_rooms_count as $u) {
-        //         if($a['room_type'] === $u['room_type']) {
-        //             $a['total'] = ($a['total'] - 1);
-        //         }
-        //     }
-        // }
+        foreach($parkings_unavailable as $parkings_unavailable) {
+            $parkings_available = $parking_spots-$parkings_unavailable;
+        }
 
-        // // Fjern de som er 0
-        // foreach($room_types as $key => $room_type) {
-        //     foreach($available_rooms_count as $a) {
-        //         if($room_type->name === $a['room_type']) {
-        //             if ($a['total'] === 0) {
-        //                 unset($room_types[$key]);
-        //             }
-        //         }
-        //     }
-        // }
-
-        return null;
+        return $parkings_available;
     }
 }
