@@ -54,15 +54,28 @@
             <h3>Personopplysninger</h3>
             <div class="step-5-sec-inner">
                 <p>Navn:</p>
-                <p>{{ Session::get('user_firstname') . " " . Session::get('user_surname') }}</p>
+                @if (Auth::check())
+                <p>{{ Auth::user()->firstname . ' ' . Auth::user()->surname }}</p>    
+                @else 
+                    <p>{{ Session::get('user_firstname') . " " . Session::get('user_surname') }}</p>
+                @endif
             </div>
             <div class="step-5-sec-inner">
                 <p>E-post: </p>
-                <p>{{ Session::get('user_mail')}}</p>
+                @if (Auth::check())
+                <p>{{ Auth::user()->email }}</p>    
+                @else 
+                    <p>{{ Session::get('user_mail')}}</p>
+                @endif
             </div>
             <div class="step-5-sec-inner">
                 <p>Telefonnummer: </p>
-                <p>{{ Session::get('user_phone')}}</p>
+                @if (Auth::check())
+                <p>{{ Auth::user()->phone }}</p>    
+                @else 
+                    <p>{{ Session::get('user_phone')}}</p>
+                @endif
+                
             </div>
         </section>
         <section class="step-5-sec">
