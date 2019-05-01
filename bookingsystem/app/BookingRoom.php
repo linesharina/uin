@@ -10,4 +10,9 @@ class BookingRoom extends Model
     {
         return $this->belongsTo('App\Booking');
     }
+
+    public function room()
+    {
+        return $this->belongsTo('App\Room');
+    }
 }
