@@ -187,6 +187,7 @@ class BookingController extends Controller
         $facilities = Facility::all();
         $facilities = $facilities->toArray();
         
+        // Beregner pris til fasilitetene
         $price = 0;
         foreach($facilities as $f) {
             if(session('facility_' . $f['name']) > 0) { 
@@ -266,9 +267,6 @@ class BookingController extends Controller
         $booking_user->user_id = $user->id;
         $booking_user->save();
 
-
-        // dd(session()->all());
-        
         if(session('facility_lunch') > 0) {
             $facility= Facility::where('name', 'lunch')->first();
 
