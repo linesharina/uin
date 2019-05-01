@@ -15,6 +15,7 @@ class Facility extends Model
         // Antall parkeringsplasser
         $parking_spots = 14;
 
+        // Finn opptatte parkeringsplasser
         $parkings_unavailable = BookingUserFacility::select(
             'booking_user_facilities.id', 
             'booking_user_facilities.facility_id'
@@ -26,6 +27,8 @@ class Facility extends Model
         ->get();
         $parkings_unavailable = $parkings_unavailable->pluck('total')->toArray();
         
+        // Regn ut hvor mange parkeringsplasser som er tilgjengelige
+        $parkings_available = $parking_spots;
         foreach($parkings_unavailable as $parkings_unavailable) {
             $parkings_available = $parking_spots-$parkings_unavailable;
         }
