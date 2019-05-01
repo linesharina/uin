@@ -34,4 +34,7 @@ Route::post('/booking-takk', 'BookingController@create6')->name('booking.create-
 Route::post('/booking-login', 'BookingController@login')->name('booking.login');
 
 // Admin
-Route::get('/admin', 'AdminController@createAdmin')->name('admin.admin-bookings');
+Route::get('/admin', 'AdminController@admin')->name('admin.admin-bookings');
+Route::get('/admin/{booking}/edit', 'AdminController@edit')->name('admin.admin-edit');
+Route::patch('/admin/{booking}/update', 'AdminController@update')->name('admin.admin-update');
+Route::delete('/admin/{booking}/delete', 'AdminController@delete')->name('admin.admin-delete');
