@@ -1,11 +1,15 @@
 <?php
 
+use App\User;
 use App\Room;
 use App\Booking;
 use App\Facility;
 use Carbon\Carbon;
 use App\BookingRoom;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -75,5 +79,19 @@ class DatabaseSeeder extends Seeder
 
             array_push($f, $facility);
         }
+
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        $admin_role = Role::create(['name' => 'admin']);
+
+        $user = User::create([
+            'firstname' => 'Ola',
+            'surname' => 'Nordmann',
+            'phone' => '12345678',
+            'email' => 'sensor@sensor.com',
+            'password' => Hash::make('sensor')
+        ]);
+
+        $user->assignRole($admin_role);
     }
 }
