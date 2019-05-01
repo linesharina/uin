@@ -10883,3 +10883,7 @@ button:hover,
   justify-content: space-between;
 }
 
+.bookings-inner {
+  padding: 50px 0;
+}
+
