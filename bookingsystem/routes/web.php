@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Bookinger
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/booking-dato', 'BookingController@create1')->name('booking.create-step1');
 Route::get('/booking-rom', 'BookingController@show2')->name('booking.show-step2');
@@ -31,3 +32,6 @@ Route::post('/booking-sammendrag', 'BookingController@create5')->name('booking.c
 Route::post('/booking-takk', 'BookingController@create6')->name('booking.create-step6');
 
 Route::post('/booking-login', 'BookingController@login')->name('booking.login');
+
+// Admin
+Route::get('/admin', 'AdminController@createAdmin')->name('admin.admin-bookings');
