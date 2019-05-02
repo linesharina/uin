@@ -26,6 +26,10 @@
                     <p>Pris rom:</p>
                     <p>{{ $room['room_price'] }},- NOK</p> 
                 </div>
+                <div class="step-5-sec-inner">
+                    <p>Antall netter:</p>
+                    <p>{{ $days_count }}</p>
+                </div>
             </section>
         @endforeach
         <section class="step-5-sec">

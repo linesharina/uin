@@ -183,18 +183,21 @@ class BookingController extends Controller
     
     public function show5()
     {
+        $check_in = session('date_checkin');
+        $check_out = session('date_checkout');
 
         $facilities = Facility::all();
         $facilities = $facilities->toArray();
         
         // Beregner pris til fasilitetene
         $price = 0;
+        $price_fac = 0;
         foreach($facilities as $f) {
             if(session('facility_' . $f['name']) > 0) { 
-                $price += ($f['price'] * session('facility_' . $f['name']));
+                $price_fac += ($f['price'] * session('facility_' . $f['name']));
             }
         }
-        $price_fac = $price; 
+        $price = $price_fac; 
 
         $rooms = Room::all();
         $rooms = $rooms->toArray();
@@ -202,10 +205,11 @@ class BookingController extends Controller
         $stored_rooms = session('rooms');
 
         // Finner ut romtype og pris
+        $price_rooms = 0;
         for ($i=0; $i < count($stored_rooms); $i++) {
             foreach ($rooms as $room) {
                 if ($stored_rooms[$i] === $room['room_type']) {
-                    $price += $room['room_price'];
+                    $price_rooms += $room['room_price'];
 
                     $stored_rooms[$i] = [
                         'room_type' => $room['room_type'],
@@ -216,10 +220,16 @@ class BookingController extends Controller
                 }
             }
         }
-
+        
         $rooms = $stored_rooms;
+        
+        // Antall netter
+        $days_count = $check_in->diffInDays($check_out);
+        
+        // Totalpris
+        $price += $price_rooms * $days_count;        
 
-        return view('booking.create-step5', compact('price', 'rooms', 'price_fac'));
+        return view('booking.create-step5', compact('price', 'rooms', 'price_fac', 'days_count'));
     }
 
 
