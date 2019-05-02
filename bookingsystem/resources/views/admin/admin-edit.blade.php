@@ -4,8 +4,8 @@
     <article class="booking-form bookings">
         <h1>Rediger booking</h1>
         <form method="POST" action="{{ route('admin.admin-update', $booking) }}">
-            @csrf
-            @method('patch')
+            {{ csrf_field() }}
+            {{ method_field('patch') }}
 
             <h2>ID: {{ $booking->id }}</h2>
             <h4>Opplysninger</h4>

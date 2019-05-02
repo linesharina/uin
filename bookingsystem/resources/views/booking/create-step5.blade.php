@@ -2,7 +2,7 @@
 
 @section('content')
     <form class="booking-form booking-form-step-5" action="{{ route('booking.create-step6') }}" method="POST">
-        @csrf
+        {{ csrf_field() }}
         <h2>Sammendrag</h2>
         <section class="step-5-sec">
             <h3>Reise</h3>

@@ -5,8 +5,7 @@
             <h2>Bestill rom</h2>
             <h3>Tilgjengelige rom</h3>
             <form action="{{ route('booking.create-step3') }}" method="POST">
-                @csrf
-
+                {{ csrf_field() }}
                 <div class="step-2-sec">
                     @foreach ($room_types as $room_type)
                         @php

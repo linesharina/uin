@@ -330,7 +330,6 @@ class BookingController extends Controller
 
     public function login(Request $request)
     {
-        // LAG EN VALIDATOR HER
         $this->booking_login_validator($request->all())->validate();
 
         $login_attempt = Auth::attempt([

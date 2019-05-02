@@ -4,7 +4,7 @@
     <article class="booking-form booking-form-step-3">
             <h2>Fasiliteter</h2>
             <form action="{{ route('booking.create-step4') }}" method="POST">
-                @csrf
+                {{ csrf_field() }}
                 <div class="step-3-sec">
                     <section class="step-3-sec-inner">
                         <h3>Måltider</h3>

@@ -5,7 +5,7 @@
         <h2>Personopplysninger</h2>
 
         <form action="{{ route('booking.login') }}" method="POST">
-            @csrf
+            {{ csrf_field() }}
             <section class="step-4-sec">
                 <div class="step-4-sec-inner">
                     <label for="form-booking-login-email">E-post</label>
@@ -21,7 +21,7 @@
         
         <h3>Eller fortsett som gjest</h3>
     <form action="{{ route('booking.create-step5') }}" method="POST">
-            @csrf
+            {{ csrf_field() }}
             <section class="step-4-sec">
                 <div class="step-4-sec-inner">
                     <label for="firstname">Fornavn*</label>

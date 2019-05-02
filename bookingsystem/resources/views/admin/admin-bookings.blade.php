@@ -27,8 +27,8 @@
                 <div class="bookings-inner-edit">
                     <a class="button" href="{{ route('admin.admin-edit', $booking) }}">Rediger</a>
                     <form method="POST" action="{{ route('admin.admin-delete', $booking) }}">
-                        @csrf
-                        @method('delete')
+                        {{ csrf_field() }}
+                        {{ method_field('delete') }}
                         <button type="submit" class="button button-secondary">Slett</button>
                     </form>
                 </div>
