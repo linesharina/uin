@@ -43,6 +43,7 @@ class Room extends Model
         
         // Finner alle reserverte rom
         $unavailable_rooms_count = self::whereIn('id', $booking_rooms)->groupBy('room_type')->select('room_type', DB::raw('count(*) as taken'))->get();
+        // dd($unavailable_rooms_count);
         $unavailable_rooms_count = $unavailable_rooms_count->toArray();
         
         // Trekk fra de ledige rommene
