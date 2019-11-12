@@ -1,0 +1,248 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+input {
+    padding: 0;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+.navbar-laravel {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+button,
+.button {
+    background-color: $hh-primary;
+    color: #f8f5e6;
+    border: 2px solid $hh-primary;
+    border-radius: 4px;
+    padding: 0.4em 0.8em;
+    line-height: 1;
+    box-shadow: 0 0.6em 0.6em -0.4em rgba(174, 151, 49, 0.33);
+
+    &:hover {
+        background-color: darken($hh-primary, 10%);
+        color: white;
+        text-decoration: none;
+    }
+}
+
+.button-secondary {
+    background-color: $hh-black;
+    border: 2px solid $hh-black;
+    color: #f8f5e6;
+}
+
+.booking-form {
+    width: 100%;
+    padding: 50px 25px 0;
+
+    @media screen and (min-width: $content-s) {
+        max-width: $content-xs;
+        margin: 0 auto;
+    }
+
+    @media screen and (min-width: $content-m) {
+        max-width: $content-s;
+    }
+
+    @media screen and (min-width: $content-l) {
+        max-width: $content-m;
+    }
+
+    @media screen and (min-width: $content-xl) {
+        max-width: $content-l;
+    }
+
+    &-btns {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 32px;
+    }
+}
+
+.booking-form-step-1 {
+    p,
+    label {
+        margin-bottom: 0;
+    }
+
+    .step-1 {
+        &-sec {
+            @media screen and (min-width: $content-l) {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            &-inner {
+                width: 100%;
+                padding: 16px 0;
+
+                @media screen and (min-width: $content-l) {
+                    padding-right: 50px;
+                }
+            }
+        }
+    }
+
+    .input-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    .select-checkout-number {
+        select {
+            width: 100%;
+        }
+    }
+}
+
+.booking-form-step-2 {
+    .step-2 {
+        &-sec {
+            display: flex;
+            flex-direction: column;
+
+            @media screen and (min-width: $content-l) {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            &-inner {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 25px 0;
+                width: 100%;
+
+                @media screen and (min-width: $content-l) {
+                    padding: 25px;
+                    width: 50%;
+                    justify-content: flex-end;
+                }
+
+                &-check {
+                    display: flex;
+                    align-items: center;
+                    padding: 25px 0 0 0;
+
+                    label {
+                        margin: 0 0 0 8px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.booking-form-step-3 {
+    @media screen and (min-width: $content-m) {
+        max-width: $content-s;
+    }
+    .step-3 {
+        &-facility {
+            h3,
+            h4 {
+                padding-top: 16px;
+            }
+
+            &-inner {
+                width: 100%;
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+
+                p,
+                label,
+                input {
+                    margin: 0;
+                }
+
+                &-number {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: baseline;
+
+                    label {
+                        padding-right: 8px;
+                    }
+
+                    input {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.booking-form-step-4 {
+    @media screen and (min-width: $content-m) {
+        max-width: $content-s;
+    }
+    .step-4 {
+        &-sec {
+            &-inner {
+                display: flex;
+                flex-direction: column;
+
+                input {
+                    margin-bottom: 24px;
+                }
+            }
+        }
+    }
+}
+
+.booking-form-step-5 {
+    width: 100%;
+
+    @media screen and (min-width: $content-m) {
+        max-width: $content-s;
+    }
+
+    .step-5 {
+        &-sec {
+            padding: 16px 0;
+            &-inner {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
+}
+
+.bookings {
+    width: 100%;
+
+    @media screen and (min-width: $content-m) {
+        max-width: $content-s;
+    }
+
+    &-inner {
+        padding: 50px 0;
+
+        &-edit {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 16px 0;
+        }
+    }
+}
